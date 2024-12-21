@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visor AR Personalizado</title>
+    <title>Visor AR Multi-Escena</title>
     <style>
         body {
             margin: 0;
@@ -68,14 +68,13 @@
     <div class="container">
         <!-- Visor AR -->
         <iframe 
-            src="https://mywebar.com/p/Project_5_onkk86rgw2" 
             id="arViewer"
             allow="camera; gyroscope; accelerometer; magnetometer; xr-spatial-tracking; microphone;">
         </iframe>
 
         <!-- Imagen superpuesta -->
         <div class="image-overlay" id="imageOverlay">
-            <img src="https://i.imgur.com/RXXbpQJ.png" alt="Portada">
+            <img src="https://i.imgur.com/bGckyMv.png" alt="Portada">
         </div>
 
         <!-- Mensaje de carga -->
@@ -85,19 +84,50 @@
     <script>
         const imageOverlay = document.getElementById('imageOverlay');
         const loadingMessage = document.getElementById('loadingMessage');
+        const iframe = document.getElementById('arViewer');
+
+        // Función para obtener parámetros de la URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Identificar proyecto basado en el parámetro "scene"
+        function cargarEscena() {
+            const scene = getQueryParam('scene');
+            let projectURL;
+
+            // Lógica para asignar proyectos según el parámetro
+            switch (scene) {
+                case 'project1':
+                    projectURL = 'https://mywebar.com/p/Project_10_fntso1carf2009';
+                    break;
+                case 'project2':
+                    projectURL = 'https://mywebar.com/p/Project_5_9fgvkx8pgt';
+                    break;
+                default:
+                    projectURL = 'https://mywebar.com/p/Project_10_fntso1carf2009'; // Proyecto predeterminado
+            }
+
+            // Establecer la URL en el iframe
+            iframe.src = projectURL;
+        }
 
         // Muestra el mensaje de carga después de 7 segundos
         setTimeout(() => {
             loadingMessage.style.display = 'block';
-        }, 9000); // 7 segundos
+        }, 7000);
 
         // Oculta la imagen después de 12 segundos
         setTimeout(() => {
             imageOverlay.classList.add('hidden');
             setTimeout(() => {
                 loadingMessage.style.display = 'none';
-            }, 3000); // Oculta el mensaje después de 5 segundos
-        }, 12000); // 12 segundos
+            }, 3000);
+        }, 12000);
+
+        // Cargar la escena al iniciar
+        cargarEscena();
     </script>
 </body>
 </html>
